@@ -1,3 +1,4 @@
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { DataService, Message } from '../services/data.service';
 
@@ -17,6 +18,10 @@ export class HomePage {
 
   getMessages(): Message[] {
     return this.data.getMessages();
+  }
+
+  add() {
+    return this.data.addItem();
   }
 
 }
