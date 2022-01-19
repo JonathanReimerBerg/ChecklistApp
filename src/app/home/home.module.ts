@@ -1,3 +1,4 @@
+import { ListComponentModule } from './../list/list.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -13,6 +14,7 @@ import { MessageComponentModule } from '../message/message.module';
     FormsModule,
     IonicModule,
     MessageComponentModule,
+    ListComponentModule,
     HomePageRoutingModule
   ],
   declarations: [HomePage]

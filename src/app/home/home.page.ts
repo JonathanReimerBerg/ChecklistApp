@@ -1,3 +1,4 @@
+import { ChecklistApiService, List } from './../services/checklist-api.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { DataService, Message } from '../services/data.service';
@@ -8,7 +9,7 @@ import { DataService, Message } from '../services/data.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor(private data: DataService) {}
+  constructor(private data: DataService, private checklistApiService: ChecklistApiService) {}
 
   refresh(ev) {
     setTimeout(() => {
@@ -18,6 +19,10 @@ export class HomePage {
 
   getMessages(): Message[] {
     return this.data.getMessages();
+  }
+
+  getLists(): List[] {
+    return this.checklistApiService.getLists();
   }
 
   add() {
