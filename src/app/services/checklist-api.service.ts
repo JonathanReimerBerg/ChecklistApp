@@ -15,7 +15,17 @@ export interface ListItem extends MetaList {
 
 export class ChecklistApiService {
 
+  public lists: List[] = [
+    {
+      id: 1,
+      title: 'Grocery List',
+      date_modified: '2/10/2001'
+    }
+  ]
+
   constructor() { }
 
-  // public getLists() {}
+  public getLists(): List[] {
+    return this.lists;
+  }
 }
