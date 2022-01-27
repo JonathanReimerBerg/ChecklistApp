@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ list.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="listItems">
+    <ion-item *ngFor="let item of listItems">
+      <ion-label class="ion-text-wrap">
+        {{ item.item_name }}
+        <div>
+          <ion-note>
+            Date Created: {{ item.date_created }}
+          </ion-note>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

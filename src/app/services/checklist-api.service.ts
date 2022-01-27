@@ -23,9 +23,39 @@ export class ChecklistApiService {
     }
   ]
 
+  public listItems: ListItem[] = [
+    {
+      id: 1,
+      item_name: 'Apple Juice',
+      date_created: '1/27/2022',
+      checked: false
+    },
+    {
+      id: 2,
+      item_name: 'Milk',
+      date_created: '1/15/2022',
+      checked: false
+    },
+    {
+      id: 1,
+      item_name: 'Pistachios',
+      date_created: '1/23/2022',
+      checked: false
+    }
+  ]
+
   constructor() { }
 
   public getLists(): List[] {
     return this.lists;
+  }
+
+  public getCurrentList(id: number): List {
+    return this.lists.find(list => list.id === id)
+  }
+
+  public getListItems(id: number): ListItem[] {
+    // we only want the list items for the selected list
+    return this.listItems.filter(item => item.id === id);
   }
 }

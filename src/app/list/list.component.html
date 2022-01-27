@@ -1,4 +1,4 @@
-<ion-item *ngIf="list">
+<ion-item *ngIf="list" [routerLink]="'/list/' + list.id">
   <ion-label class="ion-text-wrap">
     {{ list.title }}
     <div>

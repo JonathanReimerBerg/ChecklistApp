@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./view-message/view-message.module').then( m => m.ViewMessagePageModule)
   },
   {
+    path: 'list/:id',
+    loadChildren: () => import('./view-list/view-list.module').then( m => m.ViewListPageModule)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
