@@ -20,6 +20,11 @@ export class ChecklistApiService {
       id: 1,
       title: 'Grocery List',
       date_modified: '2/10/2001'
+    },
+    {
+      id: 2, 
+      title: 'Other Grocery list',
+      date_modified: '2/10/2002'
     }
   ]
 
