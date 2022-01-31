@@ -1,3 +1,6 @@
+import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
+
 interface MetaList {
   id: number;
 }
@@ -13,15 +16,13 @@ export interface ListItem extends MetaList {
   checked: boolean;
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 export class ChecklistApiService {
 
-  public lists: List[] = [
-    {
-      id: 1,
-      title: 'Grocery List',
-      date_modified: '2/10/2001'
-    }
-  ]
+  public _storage: Storage | null = null;
+  public lists: List[] | null = [];
 
   public listItems: ListItem[] = [
     {
@@ -44,10 +45,37 @@ export class ChecklistApiService {
     }
   ]
 
-  constructor() { }
+  constructor(private storage: Storage) {
+    this.init();
+  }
+
+  async init() {
+    const storage = await this.storage.create();
+    this._storage = storage;
+
+    this.lists = await storage.get('lists') || [];
+  }
+
+  public set(key: string, value: any) {
+    this._storage?.set(key, value);
+  }
 
   public getLists(): List[] {
     return this.lists;
+  }
+
+  public addList(title: string) {
+    let curLists = this.getLists();
+    let timeElasped = Date.now();
+    let newList = {
+      id: this.generateUniqueID(),
+      title: title,
+      date_modified: new Date(timeElasped).toLocaleDateString()
+    };
+
+    curLists.push(newList);
+
+    this.set('lists', curLists);
   }
 
   public getCurrentList(id: number): List {
@@ -57,5 +85,12 @@ export class ChecklistApiService {
   public getListItems(id: number): ListItem[] {
     // we only want the list items for the selected list
     return this.listItems.filter(item => item.id === id);
+  }
+
+  public generateUniqueID(): number {
+    // this returns the number of miliseconds elapsed since January 1, 1970.
+    // We are assuming this will be unique (unless it is ran multiple times per milisecond
+    // which should not be possible in our use cases).
+    return Date.now();
   }
 }

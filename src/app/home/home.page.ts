@@ -25,6 +25,11 @@ export class HomePage {
     return this.checklistApiService.getLists();
   }
 
+  // add title param to addList when working with modal'
+  addList() {
+    this.checklistApiService.addList('this is a test list');
+  }
+
   add() {
     return this.data.addItem();
   }
