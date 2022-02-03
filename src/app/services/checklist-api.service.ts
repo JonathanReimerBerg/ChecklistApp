@@ -1,3 +1,5 @@
+import { Storage } from '@ionic/storage-angular';
+
 interface MetaList {
   id: number;
 }
