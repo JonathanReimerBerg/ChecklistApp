@@ -40,7 +40,7 @@ export class HomePage {
       header: 'Creating List',
       message: 'Please name the list:',
       inputs: [
-        {name: 'Name', placeholder: 'Name'},
+        {name: 'Name', placeholder: 'Name', attributes: {autoComplete: 'off'}},
       ],
       buttons: [
         {text: 'Cancel', handler: (data: any) => {console.log('Canceled', data)}},

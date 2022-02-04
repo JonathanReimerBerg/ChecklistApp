@@ -34,7 +34,7 @@ export class ChecklistApiService {
   async init() {
     const storage = await this.storage.create();
     this._storage = storage;
-    //storage.clear()
+    // storage.clear()
 
     this.lists = await storage.get('lists') || [];
     this.items = await storage.get('items') || [];
@@ -56,7 +56,10 @@ export class ChecklistApiService {
       date_modified: new Date(timeElasped).toLocaleDateString()
     };
 
-    this.saveLists(newList);
+    let curLists = this.getLists();
+
+    curLists.push(newList);
+    this.set('lists', curLists);
   }
 
   public modifyList(id: number, title?: string, date_modified?: string) {
@@ -69,14 +72,14 @@ export class ChecklistApiService {
       list.title = title;
     }
 
-    this.saveLists(list);
-
+    this.saveList(id, list);
   }
 
-  public saveLists(list: List) {
+  public saveList(id: number, updatedList: List) {
     let curLists = this.getLists();
+    let listToUpdateIndex = this.getCurrentListIndex(id);
 
-    curLists.push(list);
+    curLists[listToUpdateIndex] = updatedList;
     this.set('lists', curLists);
 
   }
@@ -88,7 +91,11 @@ export class ChecklistApiService {
   }
 
   public getCurrentList(id: number): List {
-    return this.lists.find(list => list.id === id)
+    return this.lists.find(list => list.id === id);
+  }
+
+  public getCurrentListIndex(id: number): number {
+    return this.lists.findIndex(list => list.id === id);
   }
 
   public getListItems(id: number) {
@@ -116,7 +123,7 @@ export class ChecklistApiService {
     curItems.push(newItem);
     this.items.push(curItems);
     
-    this.listModified(listID)
+    this.listModified(listID);
 
     this.set('items', this.items);
   }
