@@ -4,12 +4,13 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>{{ list.title }}</ion-title>
+    <ion-icon size="large" name="add-sharp" slot="end" (click)="openAddItemModal()"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="listItems">
-    <ion-item *ngFor="let item of listItems">
+  <ion-list>
+    <ion-item *ngFor="let item of getListItems()">
       <ion-label class="ion-text-wrap">
         {{ item.item_name }}
         <div>
