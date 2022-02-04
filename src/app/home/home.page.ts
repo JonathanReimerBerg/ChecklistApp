@@ -27,8 +27,8 @@ export class HomePage {
   }
 
   // add title param to addList when working with modal'
-  addList() {
-    this.checklistApiService.addList('this is a test list');
+  addList(input: string) {
+    this.checklistApiService.addList(input);
   }
 
   add() {
@@ -44,7 +44,7 @@ export class HomePage {
       ],
       buttons: [
         {text: 'Cancel', handler: (data: any) => {console.log('Canceled', data)}},
-        {text: 'Done!', handler: (data: any) => {console.log('Saved Information', data)}}
+        {text: 'Done!', handler: (data: any) => {this.addList(data['Name'])}}
       ]
     }).then(res => {res.present()});
   }

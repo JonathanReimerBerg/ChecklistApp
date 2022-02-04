@@ -34,6 +34,7 @@ export class ChecklistApiService {
   async init() {
     const storage = await this.storage.create();
     this._storage = storage;
+    //storage.clear()
 
     this.lists = await storage.get('lists') || [];
     this.items = await storage.get('items') || [];
