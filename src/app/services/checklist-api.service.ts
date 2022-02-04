@@ -103,6 +103,11 @@ export class ChecklistApiService {
     return listItems || [];
   }
 
+  public getListItemsIndex(id: number) {
+    let listItemGroupIndex = this.items.findIndex(itemGroup => itemGroup.find(item => item.id === id))
+    return listItemGroupIndex;
+  }
+
   public generateUniqueID(): number {
     // this returns the number of miliseconds elapsed since January 1, 1970.
     // We are assuming this will be unique (unless it is ran multiple times per milisecond
@@ -121,6 +126,13 @@ export class ChecklistApiService {
     };
 
     curItems.push(newItem);
+    let index = this.getListItemsIndex(listID);
+    // remove old instance of item group
+    if (index > -1) {
+      this.items.splice(index, 1);
+    }
+
+    // push updated item group
     this.items.push(curItems);
     
     this.listModified(listID);
