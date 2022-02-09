@@ -34,7 +34,10 @@ export class ViewListPage implements OnInit {
       header: 'Add Item',
       inputs: [{
         name: 'Name',
-        placeholder: 'Item Name'
+        placeholder: 'Item Name',
+        attributes: {
+          autoComplete: 'off'
+        }
       }],
       buttons: [{
         text: 'Cancel',
@@ -51,6 +54,10 @@ export class ViewListPage implements OnInit {
 
   addItem(title: string) {
     this.checklistApiService.addItem(this.listID, title);
+  }
+
+  removeItem(item) {
+    this.checklistApiService.removeItem(item)
   }
 
 }
