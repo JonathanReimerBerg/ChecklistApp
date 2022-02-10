@@ -42,6 +42,7 @@ export class ChecklistApiService {
 
   public set(key: string, value: any) {
     this._storage?.set(key, value);
+    console.log(key, value)
   }
 
   public getLists(): List[] {
