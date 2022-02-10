@@ -21,8 +21,10 @@
         </div>
       -->
       </ion-item>
-      <ion-item-options>
-        <button color="danger" (click)="removeItem(item)"><ion-icon trash></ion-icon> Delete</button>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="removeItem(item)">
+         Delete
+        </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
