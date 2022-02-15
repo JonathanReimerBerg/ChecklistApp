@@ -148,6 +148,12 @@ export class ChecklistApiService {
     if (index > -1) {
       curItems.splice(index, 1);
     }
+
+    let oldIndex = this.getListItemsIndex(listID);
+    // remove old instance of item group
+    if (oldIndex > -1) {
+      this.items.splice(oldIndex, 1);
+    }
     this.items.push(curItems);
 
     this.listModified(listID);
