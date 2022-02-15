@@ -160,4 +160,19 @@ export class ChecklistApiService {
 
     this.set('items', this.items);
   }
+
+  public updateItem(listID: number, item: ListItem, index: number) {
+    let curItems = this.getListItems(listID);
+    curItems[index] = item;
+
+    let oldIndex = this.getListItemsIndex(listID);
+    // remove old instance of item group
+    if (oldIndex > -1) {
+      this.items.splice(oldIndex, 1);
+    }
+    this.items.push(curItems);
+    this.listModified(listID);
+
+    this.set('items', this.items);
+  }
 }
