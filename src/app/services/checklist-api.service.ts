@@ -1,3 +1,6 @@
+import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
+
 interface MetaList {
   id: number;
 }
@@ -13,49 +16,128 @@ export interface ListItem extends MetaList {
   checked: boolean;
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 export class ChecklistApiService {
 
-  public lists: List[] = [
-    {
-      id: 1,
-      title: 'Grocery List',
-      date_modified: '2/10/2001'
-    }
-  ]
+  public _storage: Storage | null = null;
+  public lists: List[] | null = [];
+  public items: ListItem[][] | null = [];
 
-  public listItems: ListItem[] = [
-    {
-      id: 1,
-      item_name: 'Apple Juice',
-      date_created: '1/27/2022',
-      checked: false
-    },
-    {
-      id: 2,
-      item_name: 'Milk',
-      date_created: '1/15/2022',
-      checked: false
-    },
-    {
-      id: 1,
-      item_name: 'Pistachios',
-      date_created: '1/23/2022',
-      checked: false
-    }
-  ]
+  public listItems: ListItem[] | null = [];
 
-  constructor() { }
+  constructor(private storage: Storage) {
+    this.init();
+  }
+
+  async init() {
+    const storage = await this.storage.create();
+    this._storage = storage;
+    // storage.clear()
+
+    this.lists = await storage.get('lists') || [];
+    this.items = await storage.get('items') || [];
+  }
+
+  public set(key: string, value: any) {
+    this._storage?.set(key, value);
+  }
 
   public getLists(): List[] {
     return this.lists;
   }
 
-  public getCurrentList(id: number): List {
-    return this.lists.find(list => list.id === id)
+  public addList(title: string) {
+    let timeElasped = Date.now();
+    let newList = {
+      id: this.generateUniqueID(),
+      title: title,
+      date_modified: new Date(timeElasped).toLocaleDateString()
+    };
+
+    let curLists = this.getLists();
+
+    curLists.push(newList);
+    this.set('lists', curLists);
   }
 
-  public getListItems(id: number): ListItem[] {
-    // we only want the list items for the selected list
-    return this.listItems.filter(item => item.id === id);
+  public modifyList(id: number, title?: string, date_modified?: string) {
+    let list = this.getCurrentList(id);
+
+    if (date_modified) {
+      list.date_modified = date_modified;
+    }
+    if (title) {
+      list.title = title;
+    }
+
+    this.saveList(id, list);
   }
+
+  public saveList(id: number, updatedList: List) {
+    let curLists = this.getLists();
+    let listToUpdateIndex = this.getCurrentListIndex(id);
+
+    curLists[listToUpdateIndex] = updatedList;
+    this.set('lists', curLists);
+
+  }
+
+  public listModified(listID: number) {
+    let timeElasped = Date.now();
+    // update the date_modified attribute of the list to show that it was modified
+    this.modifyList(listID, null, new Date(timeElasped).toLocaleDateString());
+  }
+
+  public getCurrentList(id: number): List {
+    return this.lists.find(list => list.id === id);
+  }
+
+  public getCurrentListIndex(id: number): number {
+    return this.lists.findIndex(list => list.id === id);
+  }
+
+  public getListItems(id: number) {
+    let listItems = this.items.find(itemGroup => itemGroup.find(item => item.id === id))
+    return listItems || [];
+  }
+
+  public getListItemsIndex(id: number) {
+    let listItemGroupIndex = this.items.findIndex(itemGroup => itemGroup.find(item => item.id === id))
+    return listItemGroupIndex;
+  }
+
+  public generateUniqueID(): number {
+    // this returns the number of miliseconds elapsed since January 1, 1970.
+    // We are assuming this will be unique (unless it is ran multiple times per milisecond
+    // which should not be possible in our use cases).
+    return Date.now();
+  }
+  public addItem(listID: number, title: string) {
+    let curItems = this.getListItems(listID);
+    let timeElasped = Date.now();
+    let currentDate = new Date(timeElasped).toLocaleDateString()
+    let newItem = {
+      id: listID,
+      item_name: title,
+      date_created: currentDate,
+      checked: false
+    };
+
+    curItems.push(newItem);
+    let index = this.getListItemsIndex(listID);
+    // remove old instance of item group
+    if (index > -1) {
+      this.items.splice(index, 1);
+    }
+
+    // push updated item group
+    this.items.push(curItems);
+    
+    this.listModified(listID);
+
+    this.set('items', this.items);
+  }
+
 }
