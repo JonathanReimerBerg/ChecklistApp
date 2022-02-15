@@ -56,4 +56,8 @@ export class ViewListPage implements OnInit {
     this.checklistApiService.addItem(this.listID, title);
   }
 
+  removeItem(item: ListItem) {
+    this.checklistApiService.removeItem(this.listID, item);
+  }
+
 }
