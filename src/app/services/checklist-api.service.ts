@@ -34,7 +34,7 @@ export class ChecklistApiService {
   async init() {
     const storage = await this.storage.create();
     this._storage = storage;
-    // storage.clear()
+    //storage.clear()
 
     this.lists = await storage.get('lists') || [];
     this.items = await storage.get('items') || [];
@@ -174,5 +174,17 @@ export class ChecklistApiService {
     this.listModified(listID);
 
     this.set('items', this.items);
+  }
+
+  public removeList(item: List){
+    let listID = (item[Object.keys(item)[0]])
+    let curLists = this.getLists();
+
+    let index = curLists.findIndex(listItem => listItem.id == listID); 
+
+    if (index > -1) {
+      curLists.splice(index, 1);
+    }
+    this.set('lists', curLists);
   }
 }
