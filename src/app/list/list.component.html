@@ -1,7 +1,7 @@
 
   <ion-list>
-    <ion-item-sliding *ngIf="list" [routerLink]="'/list/' + list.id">
-      <ion-item class="ion-text-wrap">
+    <ion-item-sliding *ngIf="list">
+      <ion-item class="ion-text-wrap" [routerLink]="'/list/' + list.id">
         {{ list.title }}
         <ion-label slot="end">Last Modified: {{ list.date_modified }}</ion-label>      
       </ion-item>
