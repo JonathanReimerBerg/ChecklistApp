@@ -9,6 +9,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./view-list.page.scss'],
 })
 export class ViewListPage implements OnInit {
+  private list: List;
   private listID: any;
   private listItems: ListItem[] | null = null;
 
@@ -18,16 +19,21 @@ export class ViewListPage implements OnInit {
     private alertCtrl: AlertController
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     // get id from routerLink param
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     this.listID = id;
+    
+    await this.getList(id);
     await this.getListItems(id);
   }
 
   async getListItems(id) {
     this.listItems = await this.checklistApiService._getListItems(id);
   }
+
+  async getList(id) {
+    this.list = await this.checklistApiService._getList(id);
   }
 
   async openAddItemModal() {

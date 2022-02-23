@@ -110,6 +110,14 @@ export class ChecklistApiService {
     this.modifyList(listID, null, new Date(timeElasped).toLocaleDateString());
   }
 
+  public async _getList(id) {
+    const URL = '/api/checklists/' + id;
+  
+    let response = await this.http.get(URL).toPromise();
+
+    return response['results'][0];
+  }
+
   public getCurrentList(id: number): List {
     return this.lists.find(list => list.id === id);
   }
