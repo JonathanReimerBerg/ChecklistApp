@@ -123,6 +123,14 @@ export class ChecklistApiService {
     return listItems || [];
   }
 
+  public async _getListItems(id) {
+    const URL = '/api/items/' + id;
+  
+    let response = await this.http.get(URL).toPromise();
+
+    return response['results'];
+  }
+
   public getListItemsIndex(id: number) {
     let listItemGroupIndex = this.items.findIndex(itemGroup => itemGroup.find(item => item.id === id))
     return listItemGroupIndex;
