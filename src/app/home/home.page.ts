@@ -10,20 +10,27 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  lists: List[] | null = null;
+
   constructor(private data: DataService, private checklistApiService: ChecklistApiService, public alertController: AlertController) {}
+
+  async ngOnInit() {
+    await this.getLists();
+  }
 
   refresh(ev) {
     setTimeout(() => {
       ev.detail.complete();
     }, 3000);
+    this.getLists();
   }
 
   getMessages(): Message[] {
     return this.data.getMessages();
   }
 
-  getLists(): List[] {
-    return this.checklistApiService.getLists();
+  async getLists() {
+    this.lists = await this.checklistApiService._getLists();
   }
 
   // add title param to addList when working with modal'

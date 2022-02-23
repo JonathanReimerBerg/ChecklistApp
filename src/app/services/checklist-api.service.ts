@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { HttpClient } from '@angular/common/http';
 
 interface MetaList {
   id: number;
@@ -27,7 +28,7 @@ export class ChecklistApiService {
 
   public listItems: ListItem[] | null = [];
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private http: HttpClient) {
     this.init();
   }
 
@@ -47,6 +48,14 @@ export class ChecklistApiService {
 
   public getLists(): List[] {
     return this.lists;
+  }
+
+  public async _getLists() {
+    const URL = '/api/checklists/';
+  
+    let response = await this.http.get(URL).toPromise();
+
+    return response['results'];
   }
 
   public addList(title: string) {
