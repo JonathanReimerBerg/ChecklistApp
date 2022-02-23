@@ -94,6 +94,16 @@ export class ChecklistApiService {
 
   }
 
+  public _addList(title: string) {
+    const URL = '/api/checklists/';
+
+    let newList = {
+      title: title
+    };
+
+    this.http.post(URL, newList).subscribe(() => {});
+  }
+
   public listModified(listID: number) {
     let timeElasped = Date.now();
     // update the date_modified attribute of the list to show that it was modified

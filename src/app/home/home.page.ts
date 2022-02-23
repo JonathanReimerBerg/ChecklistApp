@@ -34,8 +34,12 @@ export class HomePage {
   }
 
   // add title param to addList when working with modal'
-  addList(input: string) {
-    this.checklistApiService.addList(input);
+  async addList(title: string) {
+    this.checklistApiService._addList(title);
+
+    // refresh called twice to fix caching bug
+    await this.getLists();
+    await this.getLists();
   }
 
   add() {
