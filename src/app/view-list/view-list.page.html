@@ -9,17 +9,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-content *ngIf="getListItems().length == 0" style="text-align:center"  >
+  <ion-content *ngIf="listItems?.length == 0" style="text-align:center"  >
     <p>
       <i>You currently don't have any items in the list. Click the '+' button to add one.</i>
     </p>
   </ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let item of getListItems(); let i = index">
+    <ion-item-sliding *ngFor="let item of listItems">
       <ion-item class="ion-text-wrap">
         <ion-checkbox color="primary" [(ngModel)]="item.checked" (ionChange)="updateItem(item, i)"></ion-checkbox>
         &nbsp;&nbsp; 
-        {{ item.item_name }}     
+        {{ item.name }}     
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="removeItem(item.id)">
