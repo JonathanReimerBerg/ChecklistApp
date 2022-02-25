@@ -9,6 +9,11 @@
 </ion-header>
 
 <ion-content>
+  <ion-content *ngIf="getListItems().length == 0" style="text-align:center"  >
+    <p>
+      <i>You currently don't have any items in the list. Click the '+' button to add one.</i>
+    </p>
+  </ion-content>
   <ion-list>
     <ion-item-sliding *ngFor="let item of getListItems(); let i = index">
       <ion-item class="ion-text-wrap">
