@@ -239,4 +239,10 @@ export class ChecklistApiService {
     }
     this.set('lists', curLists);
   }
+
+  public _removeList(listID: number) {
+    const URL = '/api/checklists/' + listID
+
+    this.http.delete(URL).subscribe(() => {});
+  }
 }
