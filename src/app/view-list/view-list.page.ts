@@ -59,8 +59,12 @@ export class ViewListPage implements OnInit {
     (await alert).present()
   }
 
-  addItem(title: string) {
-    this.checklistApiService.addItem(this.listID, title);
+  async addItem(name: string) {
+    this.checklistApiService._addItem(this.listID, name);
+    
+    // refresh twice to fix caching bug
+    await this.getListItems(this.listID);
+    await this.getListItems(this.listID);
   }
 
   removeItem(item: ListItem) {

@@ -176,6 +176,17 @@ export class ChecklistApiService {
     this.set('items', this.items);
   }
 
+  public _addItem(listID: number, name: string) {
+    const URL = '/api/items/' + listID;
+
+    let newItem = {
+      list: listID,
+      name: name
+    };
+
+    this.http.post(URL, newItem).subscribe(() => {});
+  }
+
   public removeItem(listID: number, item: ListItem) {
     let curItems = this.getListItems(listID);
 
