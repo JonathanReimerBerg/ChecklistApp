@@ -67,8 +67,10 @@ export class ViewListPage implements OnInit {
     await this.getListItems(this.listID);
   }
 
-  removeItem(item: ListItem) {
-    this.checklistApiService.removeItem(this.listID, item);
+  async removeItem(itemID: number) {
+    this.checklistApiService._removeItem(this.listID, itemID);
+
+    await this.getListItems(this.listID);
   }
 
   updateItem(item: ListItem, i: number) {

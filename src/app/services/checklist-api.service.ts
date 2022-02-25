@@ -207,6 +207,12 @@ export class ChecklistApiService {
     this.set('items', this.items);
   }
 
+  public _removeItem(listID: number, itemID: number) {
+    const URL = '/api/items/' + listID + '/' + itemID;
+
+    this.http.delete(URL).subscribe(() => {});
+  }
+
   public updateItem(listID: number, item: ListItem, index: number) {
     let curItems = this.getListItems(listID);
     curItems[index] = item;
