@@ -82,4 +82,10 @@ export class ViewListPage implements OnInit {
     this.checklistApiService.updateItem(this.listID, item, i);
   }
 
+  _updateItem(item: ListItem) {
+    this.checklistApiService._updateItem(this.listID, item);
+    // update the list's date to show that it has been modified
+    this.checklistApiService._updateList(this.listID);
+  }
+
 }

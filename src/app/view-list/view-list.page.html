@@ -17,7 +17,7 @@
   <ion-list>
     <ion-item-sliding *ngFor="let item of listItems">
       <ion-item class="ion-text-wrap">
-        <ion-checkbox color="primary" [(ngModel)]="item.checked" (ionChange)="updateItem(item, i)"></ion-checkbox>
+        <ion-checkbox color="primary" [(ngModel)]="item.checked" (ionChange)="_updateItem(item)"></ion-checkbox>
         &nbsp;&nbsp; 
         {{ item.name }}     
       </ion-item>

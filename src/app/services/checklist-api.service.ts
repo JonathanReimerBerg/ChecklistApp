@@ -241,6 +241,12 @@ export class ChecklistApiService {
     this.set('items', this.items);
   }
 
+  public _updateItem(listID: number, item: ListItem) {
+    const URL = '/api/items/' + listID + '/' + item.id;
+
+    this.http.patch(URL, item).subscribe(() => {});
+  }
+
   public removeList(item: List){
     let listID = (item[Object.keys(item)[0]])
     let curLists = this.getLists();
