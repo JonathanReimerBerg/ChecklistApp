@@ -85,6 +85,19 @@ export class ChecklistApiService {
     this.saveList(id, list);
   }
 
+  public _updateList(listID: number, title?: string) {
+    const URL = '/api/checklists/' + listID;
+
+    let timeElasped = Date.now()
+
+    let updatedList = {
+      title: title,
+      date_modified: new Date(timeElasped).toLocaleDateString('en-CA')
+    };
+
+    this.http.patch(URL, updatedList).subscribe(() => {});
+  }
+
   public saveList(id: number, updatedList: List) {
     let curLists = this.getLists();
     let listToUpdateIndex = this.getCurrentListIndex(id);

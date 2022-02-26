@@ -61,6 +61,8 @@ export class ViewListPage implements OnInit {
 
   async addItem(name: string) {
     this.checklistApiService._addItem(this.listID, name);
+    // update the list's date to show that it has been modified
+    this.checklistApiService._updateList(this.listID);
     
     // refresh twice to fix caching bug
     await this.getListItems(this.listID);
@@ -69,6 +71,8 @@ export class ViewListPage implements OnInit {
 
   async removeItem(itemID: number) {
     this.checklistApiService._removeItem(this.listID, itemID);
+    // update the list's date to show that it has been modified
+    this.checklistApiService._updateList(this.listID);
 
     await this.getListItems(this.listID);
     await this.getListItems(this.listID);
