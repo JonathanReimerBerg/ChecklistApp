@@ -3,7 +3,7 @@
     <ion-item-sliding *ngIf="list">
       <ion-item class="ion-text-wrap" [routerLink]="'/list/' + list.id">
         {{ list.title }}
-        <ion-label slot="end">Last Modified: {{ list.date_modified }}</ion-label>      
+        <ion-label slot="end" color="medium">Last Modified: {{ list.date_modified }}</ion-label>      
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="removeList(list.id)">Delete</ion-item-option>
