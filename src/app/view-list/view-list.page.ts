@@ -88,4 +88,30 @@ export class ViewListPage implements OnInit {
     this.checklistApiService._updateList(this.listID);
   }
 
+  async openEditTitleModal() {
+    let alert = this.alertCtrl.create({
+      header: 'Edit List Title',
+      inputs: [{
+        name: 'Title',
+        value: this.list.title,
+        placeholder: 'List Title',
+        attributes: {
+          autoComplete: 'off'
+        }
+      }],
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel'
+      }, {
+        text: 'Update',
+        handler: async (data) => {
+          this.checklistApiService._updateList(this.listID, data['Title']);
+          await this.getList(this.listID);
+          await this.getList(this.listID);
+        }
+      }]
+    });
+    (await alert).present()
+  }
+
 }

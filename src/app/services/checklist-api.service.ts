@@ -91,9 +91,12 @@ export class ChecklistApiService {
     let timeElasped = Date.now()
 
     let updatedList = {
-      title: title,
       date_modified: new Date(timeElasped).toLocaleDateString('en-CA')
     };
+
+    if (typeof title !== 'undefined') {
+      updatedList['title'] = title
+    }
 
     this.http.patch(URL, updatedList).subscribe(() => {});
   }
