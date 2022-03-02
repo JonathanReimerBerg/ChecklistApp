@@ -42,6 +42,7 @@ export class ChecklistApiService {
 
   public set(key: string, value: any) {
     this._storage?.set(key, value);
+    console.log(key, value)
   }
 
   public getLists(): List[] {
@@ -140,4 +141,38 @@ export class ChecklistApiService {
     this.set('items', this.items);
   }
 
+  public removeItem(listID: number, item: ListItem) {
+    let curItems = this.getListItems(listID);
+
+    let index = curItems.findIndex(listItem => listItem.item_name == item.item_name);
+    if (index > -1) {
+      curItems.splice(index, 1);
+    }
+
+    let oldIndex = this.getListItemsIndex(listID);
+    // remove old instance of item group
+    if (oldIndex > -1) {
+      this.items.splice(oldIndex, 1);
+    }
+    this.items.push(curItems);
+
+    this.listModified(listID);
+
+    this.set('items', this.items);
+  }
+
+  public updateItem(listID: number, item: ListItem, index: number) {
+    let curItems = this.getListItems(listID);
+    curItems[index] = item;
+
+    let oldIndex = this.getListItemsIndex(listID);
+    // remove old instance of item group
+    if (oldIndex > -1) {
+      this.items.splice(oldIndex, 1);
+    }
+    this.items.push(curItems);
+    this.listModified(listID);
+
+    this.set('items', this.items);
+  }
 }
