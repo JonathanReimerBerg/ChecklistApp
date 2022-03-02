@@ -56,4 +56,5 @@ export class ViewListPage implements OnInit {
     this.checklistApiService.addItem(this.listID, title);
   }
 
+
 }

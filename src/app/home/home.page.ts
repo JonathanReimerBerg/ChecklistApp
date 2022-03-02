@@ -48,4 +48,31 @@ export class HomePage {
       ]
     }).then(res => {res.present()});
   }
+
+  Notify() {
+    alert('Here is your notificaiton!')
+  }
+
+  ViewLockedLists() {
+    alert('No Locked lists applicable yet sorry.')
+  }
+
+  Share() {
+    alert('Share is not working.')
+  }
+
+  Search() {
+    alert("Seach elsewhere")
+  }
+
+  SelfDriving() {
+    alert("Still in Beta driving mode.")
+  }
+ 
+  ReviewApp() {
+    alert('Five Stars?')
+  }
+ 
 }
+
+
