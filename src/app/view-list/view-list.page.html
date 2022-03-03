@@ -15,6 +15,18 @@
     </p>
   </ion-content>
   <ion-list>
+<<<<<<< HEAD
+    <ion-label class="ion-text-wrap">  
+      <ion-item *ngFor="let item of getListItems()">
+        <ion-checkbox color="primary"></ion-checkbox>
+        &nbsp;&nbsp; {{ item.item_name }}
+      
+        <ion-label></ion-label>
+        Date Created: {{ item.date_created }} &nbsp;&nbsp;  
+        
+      </ion-item>
+    </ion-label>
+=======
     <ion-item-sliding *ngFor="let item of getListItems(); let i = index">
       <ion-item class="ion-text-wrap">
         <ion-checkbox color="primary" [(ngModel)]="item.checked" (ionChange)="updateItem(item, i)"></ion-checkbox>
@@ -27,6 +39,7 @@
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
+>>>>>>> 08540b36c50cf587b60a78e1cdaffd27cb9cfd8f
   </ion-list>
 
 </ion-content>
