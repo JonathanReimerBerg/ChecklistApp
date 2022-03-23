@@ -10,6 +10,8 @@ import { AlertController } from '@ionic/angular';
 })
 export class ViewListPage implements OnInit {
   public list: List;
+  public sortType: string;
+  public desc: boolean = false;
   private listID: number;
 
   constructor(
@@ -34,16 +36,16 @@ export class ViewListPage implements OnInit {
       header: 'Sorting Method',
       buttons: [{
         text: 'Alphabetical',
-        handler: (data) => {this.checklistApiService.sort('Alphabetical')}
+        handler: (data) => {this.sortType = 'alphabetical', this.desc = !this.desc}
       }, {
         text: 'Completed',
-        handler: (data) => {this.checklistApiService.sort('Completed')}
+        handler: (data) => {this.sortType = 'completed', this.desc = !this.desc}
       }, {
         text: 'Do By Date',
-        handler: (data) => {this.checklistApiService.sort('Due')}
+        handler: (data) => {this.sortType = 'doByDate', this.desc = !this.desc}
       }, {
         text: 'Date Created',
-        handler: (data) => {this.checklistApiService.sort('Date Created')}
+        handler: (data) => {this.sortType = 'dateCreated', this.desc = !this.desc}
       }]
     });
     (await alert).present()

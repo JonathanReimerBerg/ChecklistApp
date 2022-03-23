@@ -42,7 +42,6 @@ export class ChecklistApiService {
 
   public set(key: string, value: any) {
     this._storage?.set(key, value);
-    console.log(key, value)
   }
 
   public getLists(): List[] {
@@ -188,7 +187,4 @@ export class ChecklistApiService {
     this.set('lists', curLists);
   }
 
-  public sort(method: String){
-    console.log(method)
-  }
 }

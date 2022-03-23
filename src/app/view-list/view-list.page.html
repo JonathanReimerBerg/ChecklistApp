@@ -16,7 +16,7 @@
     </p>
   </ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let item of getListItems(); let i = index">
+    <ion-item-sliding *ngFor="let item of getListItems() | sort: sortType : desc; let i = index">
       <ion-item class="ion-text-wrap">
         <ion-checkbox color="primary" [(ngModel)]="item.checked" (ionChange)="updateItem(item, i)"></ion-checkbox>
         &nbsp;&nbsp; 
