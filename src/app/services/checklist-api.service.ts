@@ -187,4 +187,8 @@ export class ChecklistApiService {
     }
     this.set('lists', curLists);
   }
+
+  public sort(method: String){
+    console.log(method)
+  }
 }

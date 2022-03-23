@@ -29,6 +29,26 @@ export class ViewListPage implements OnInit {
     return this.checklistApiService.getListItems(this.listID);
   }
 
+  async sort_items() {
+    let alert = this.alertCtrl.create({
+      header: 'Sorting Method',
+      buttons: [{
+        text: 'Alphabetical',
+        handler: (data) => {this.checklistApiService.sort('Alphabetical')}
+      }, {
+        text: 'Completed',
+        handler: (data) => {this.checklistApiService.sort('Completed')}
+      }, {
+        text: 'Do By Date',
+        handler: (data) => {this.checklistApiService.sort('Due')}
+      }, {
+        text: 'Date Created',
+        handler: (data) => {this.checklistApiService.sort('Date Created')}
+      }]
+    });
+    (await alert).present()
+  }
+
   async openAddItemModal() {
     let alert = this.alertCtrl.create({
       header: 'Add Item',
