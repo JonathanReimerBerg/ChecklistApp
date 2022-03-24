@@ -34,7 +34,7 @@ export class ChecklistApiService {
   async init() {
     const storage = await this.storage.create();
     this._storage = storage;
-    //storage.clear()
+    // storage.clear()
 
     this.lists = await storage.get('lists') || [];
     this.items = await storage.get('items') || [];
@@ -140,6 +140,14 @@ export class ChecklistApiService {
     this.set('items', this.items);
   }
 
+  public removeEmptyItemGroups() {
+    this.items = this.items.filter(itemGroup => {
+      if (itemGroup.length > 0) {
+        return itemGroup;
+      }
+    });
+  }
+
   public removeItem(listID: number, item: ListItem) {
     let curItems = this.getListItems(listID);
 
@@ -158,6 +166,7 @@ export class ChecklistApiService {
     this.listModified(listID);
 
     this.set('items', this.items);
+    this.removeEmptyItemGroups();
   }
 
   public updateItem(listID: number, item: ListItem, index: number) {
