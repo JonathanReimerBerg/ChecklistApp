@@ -33,6 +33,7 @@ export class ViewListPage implements OnInit {
 
   async sort_items() {
     let alert = this.alertCtrl.create({
+      cssClass: 'unboldLastElement',
       header: 'Sorting Method',
       buttons: [{
         text: 'Alphabetical',
