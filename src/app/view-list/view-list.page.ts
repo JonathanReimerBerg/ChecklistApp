@@ -118,6 +118,7 @@ export class ViewListPage implements OnInit {
         handler: async (data) => {
           this.checklistApiService.modifyList(this.listID, data['Title']);
           this.checklistApiService.listModified(this.listID);
+          this.presentToast("List successfully updated.")
         }
       }]
     });
