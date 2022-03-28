@@ -2,7 +2,7 @@ import { ChecklistApiService, List } from './../services/checklist-api.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { DataService, Message } from '../services/data.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +10,12 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor(private data: DataService, private checklistApiService: ChecklistApiService, public alertController: AlertController) {}
+  constructor(
+    private data: DataService,
+    private checklistApiService: ChecklistApiService,
+    public alertController: AlertController,
+    public toastController: ToastController
+    ) {}
 
   refresh(ev) {
     setTimeout(() => {
@@ -26,9 +31,18 @@ export class HomePage {
     return this.checklistApiService.getLists();
   }
 
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    toast.present();
+  }
+
   // add title param to addList when working with modal'
   addList(input: string) {
     this.checklistApiService.addList(input);
+    this.presentToast("List successfully added.")
   }
 
   add() {
