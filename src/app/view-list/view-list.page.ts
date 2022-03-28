@@ -40,25 +40,37 @@ export class ViewListPage implements OnInit {
       header: 'Sorting Method',
       buttons: [{
         text: 'Alphabetical',
-        handler: (data) => {this.checklistApiService.modifyList(this.listID, null, null, "alphabetical", (this.list.sorting_method === "alphabetical")), this.sortType = 'alphabetical', this.desc = !this.list.sorting_reversed}
+        handler: (data) => {
+          this.checklistApiService.modifyList(this.listID, null, null, "alphabetical", (this.list.sorting_method === "alphabetical")), this.sortType = 'alphabetical', this.desc = !this.list.sorting_reversed
+          this.presentToast(`Sorting alphabetically (${this.desc ? 'Desc': 'Asc'})`, 3000);
+        }
       }, {
         text: 'Completed',
-        handler: (data) => {this.checklistApiService.modifyList(this.listID, null, null, "completed", (this.list.sorting_method === "completed")), this.sortType = 'completed', this.desc = !this.list.sorting_reversed}
+        handler: (data) => {
+          this.checklistApiService.modifyList(this.listID, null, null, "completed", (this.list.sorting_method === "completed")), this.sortType = 'completed', this.desc = !this.list.sorting_reversed
+          this.presentToast(`Sorting via completion (${this.desc ? 'Desc': 'Asc'})`, 3000);
+        }
       }, {
         text: 'Do By Date',
-        handler: (data) => {this.checklistApiService.modifyList(this.listID, null, null, "doByDate", (this.list.sorting_method === "doByDate")), this.sortType = 'doByDate', this.desc = !this.list.sorting_reversed}
+        handler: (data) => {
+          this.checklistApiService.modifyList(this.listID, null, null, "doByDate", (this.list.sorting_method === "doByDate")), this.sortType = 'doByDate', this.desc = !this.list.sorting_reversed
+          this.presentToast(`Sorting via do by date (${this.desc ? 'Desc': 'Asc'})`, 3000);
+        }
       }, {
         text: 'Date Created',
-        handler: (data) => {this.checklistApiService.modifyList(this.listID, null, null, "dateCreated", (this.list.sorting_method === "dateCreated")), this.sortType = 'dateCreated', this.desc = !this.list.sorting_reversed}
+        handler: (data) => {
+          this.checklistApiService.modifyList(this.listID, null, null, "dateCreated", (this.list.sorting_method === "dateCreated")), this.sortType = 'dateCreated', this.desc = !this.list.sorting_reversed
+          this.presentToast(`Sorting via date created (${this.desc ? 'Desc': 'Asc'})`, 3000);
+        }
       }]
     });
     (await alert).present()
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, duration?: number) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 2000
+      duration: duration || 2000
     });
     toast.present();
   }
