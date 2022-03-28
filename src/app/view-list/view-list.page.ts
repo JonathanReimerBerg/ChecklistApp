@@ -1,7 +1,7 @@
 import { ListItem, List, ChecklistApiService } from './../services/checklist-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-view-list',
@@ -17,7 +17,8 @@ export class ViewListPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private checklistApiService: ChecklistApiService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    public toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -54,6 +55,14 @@ export class ViewListPage implements OnInit {
     (await alert).present()
   }
 
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    toast.present();
+  }
+
   async openAddItemModal() {
     let alert = this.alertCtrl.create({
       header: 'Add Item',
@@ -71,6 +80,7 @@ export class ViewListPage implements OnInit {
         text: 'Add',
         handler: (data) => {
           this.addItem(data['Name']);
+          this.presentToast("Item successfully added.")
         }
       }]
     });
