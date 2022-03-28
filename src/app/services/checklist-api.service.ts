@@ -8,9 +8,12 @@ interface MetaList {
 export interface List extends MetaList {
   title: string;
   date_modified: string;
+  sorting_method: string;
+  sorting_reversed: boolean;
 }
 
 export interface ListItem extends MetaList {
+  item_id: number;
   item_name: string;
   date_created: string;
   checked: boolean;
@@ -34,7 +37,7 @@ export class ChecklistApiService {
   async init() {
     const storage = await this.storage.create();
     this._storage = storage;
-    // storage.clear()
+    //storage.clear()
 
     this.lists = await storage.get('lists') || [];
     this.items = await storage.get('items') || [];
@@ -53,7 +56,9 @@ export class ChecklistApiService {
     let newList = {
       id: this.generateUniqueID(),
       title: title,
-      date_modified: new Date(timeElasped).toLocaleDateString()
+      date_modified: new Date(timeElasped).toLocaleDateString(),
+      sorting_method: "dateCreated",
+      sorting_reversed: false
     };
 
     let curLists = this.getLists();
@@ -62,7 +67,7 @@ export class ChecklistApiService {
     this.set('lists', curLists);
   }
 
-  public modifyList(id: number, title?: string, date_modified?: string) {
+  public modifyList(id: number, title?: string, date_modified?: string, sorting_method?: string, sorting_reversed?: boolean) {
     let list = this.getCurrentList(id);
 
     if (date_modified) {
@@ -71,7 +76,15 @@ export class ChecklistApiService {
     if (title) {
       list.title = title;
     }
-
+    if (sorting_reversed) {
+      list.sorting_reversed = !list.sorting_reversed 
+    }
+    if (sorting_method) {
+      if (list.sorting_method !== sorting_method) {
+        list.sorting_reversed = false
+      }
+      list.sorting_method = sorting_method
+    }
     this.saveList(id, list);
   }
 
@@ -120,6 +133,7 @@ export class ChecklistApiService {
     let currentDate = new Date(timeElasped).toLocaleDateString()
     let newItem = {
       id: listID,
+      item_id: this.generateUniqueID(),
       item_name: title,
       date_created: currentDate,
       checked: false
@@ -195,5 +209,4 @@ export class ChecklistApiService {
     }
     this.set('lists', curLists);
   }
-
 }
