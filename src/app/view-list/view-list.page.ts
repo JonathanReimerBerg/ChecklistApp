@@ -42,37 +42,29 @@ export class ViewListPage implements OnInit {
         text: 'Alphabetical',
         handler: (data) => {
           this.checklistApiService.modifyList(this.listID, null, null, "alphabetical", (this.list.sorting_method === "alphabetical")), this.sortType = 'alphabetical', this.desc = !this.list.sorting_reversed
-          this.presentToast(`Sorting alphabetically (${this.desc ? 'Desc': 'Asc'})`, 3000);
+          this.checklistApiService.presentToast(`Sorting alphabetically (${this.desc ? 'Desc': 'Asc'})`, 3000);
         }
       }, {
         text: 'Completed',
         handler: (data) => {
           this.checklistApiService.modifyList(this.listID, null, null, "completed", (this.list.sorting_method === "completed")), this.sortType = 'completed', this.desc = !this.list.sorting_reversed
-          this.presentToast(`Sorting via completion (${this.desc ? 'Desc': 'Asc'})`, 3000);
+          this.checklistApiService.presentToast(`Sorting via completion (${this.desc ? 'Desc': 'Asc'})`, 3000);
         }
       }, {
         text: 'Do By Date',
         handler: (data) => {
           this.checklistApiService.modifyList(this.listID, null, null, "doByDate", (this.list.sorting_method === "doByDate")), this.sortType = 'doByDate', this.desc = !this.list.sorting_reversed
-          this.presentToast(`Sorting via do by date (${this.desc ? 'Desc': 'Asc'})`, 3000);
+          this.checklistApiService.presentToast(`Sorting via do by date (${this.desc ? 'Desc': 'Asc'})`, 3000);
         }
       }, {
         text: 'Date Created',
         handler: (data) => {
           this.checklistApiService.modifyList(this.listID, null, null, "dateCreated", (this.list.sorting_method === "dateCreated")), this.sortType = 'dateCreated', this.desc = !this.list.sorting_reversed
-          this.presentToast(`Sorting via date created (${this.desc ? 'Desc': 'Asc'})`, 3000);
+          this.checklistApiService.presentToast(`Sorting via date created (${this.desc ? 'Desc': 'Asc'})`, 3000);
         }
       }]
     });
     (await alert).present()
-  }
-
-  async presentToast(message: string, duration?: number) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: duration || 2000
-    });
-    toast.present();
   }
 
   async openAddItemModal() {
@@ -91,8 +83,13 @@ export class ViewListPage implements OnInit {
       }, {
         text: 'Add',
         handler: (data) => {
-          this.addItem(data['Name']);
-          this.presentToast("Item successfully added.")
+          if (data['Name'].trim()) {
+            this.addItem(data['Name'].trim());
+            this.checklistApiService.presentToast("Item successfully added.")
+          } else {
+            this.checklistApiService.presentToast("Item name cannot be blank.", null, "top", "danger");
+            return false;
+          }
         }
       }]
     });
@@ -129,8 +126,7 @@ export class ViewListPage implements OnInit {
         text: 'Update',
         handler: async (data) => {
           this.checklistApiService.modifyList(this.listID, data['Title']);
-          this.checklistApiService.listModified(this.listID);
-          this.presentToast("List successfully updated.")
+          this.checklistApiService.presentToast("List successfully updated.")
         }
       }]
     });

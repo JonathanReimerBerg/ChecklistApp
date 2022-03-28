@@ -20,14 +20,6 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {}
 
-  async presentToast(message: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 2000
-    });
-    toast.present();
-  }
-
   removeList(item){
     this.alertController.create({
       header: 'Warning: Deleting List',
@@ -36,7 +28,7 @@ export class ListComponent implements OnInit {
         {text: 'Cancel', handler: (data: any) => {console.log('Canceled', this.list)}},
         {text: 'Delete', handler: (data: any) => {
           this.checklistApiService.removeList(this.list);
-          this.presentToast("List deleted.");
+          this.checklistApiService.presentToast("List deleted.");
         }}
       ]
     }).then(res => {res.present()});

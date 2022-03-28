@@ -1,3 +1,4 @@
+import { ToastController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
@@ -30,7 +31,7 @@ export class ChecklistApiService {
 
   public listItems: ListItem[] | null = [];
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, public toastController: ToastController) {
     this.init();
   }
 
@@ -208,5 +209,15 @@ export class ChecklistApiService {
       curLists.splice(index, 1);
     }
     this.set('lists', curLists);
+  }
+
+  async presentToast(message: string, duration?: number, position?: any, color?: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration || 2000,
+      position: position || "bottom",
+      color: color || "dark"
+    });
+    toast.present();
   }
 }

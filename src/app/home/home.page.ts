@@ -31,18 +31,10 @@ export class HomePage {
     return this.checklistApiService.getLists();
   }
 
-  async presentToast(message: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 2000
-    });
-    toast.present();
-  }
-
   // add title param to addList when working with modal'
   addList(input: string) {
     this.checklistApiService.addList(input);
-    this.presentToast("List successfully added.")
+    this.checklistApiService.presentToast("List successfully added.")
   }
 
   add() {
@@ -58,7 +50,15 @@ export class HomePage {
       ],
       buttons: [
         {text: 'Cancel', handler: (data: any) => {console.log('Canceled', data)}},
-        {text: 'Done!', handler: (data: any) => {this.addList(data['Name'])}}
+        {text: 'Done!', handler: (data: any) => {
+          if (data['Name'].trim()) {
+            this.addList(data['Name'].trim());
+            this.checklistApiService.presentToast("List successfully added.")
+          } else {
+            this.checklistApiService.presentToast("List name cannot be blank.", null, "top", "danger");
+            return false;
+          }
+        }}
       ]
     }).then(res => {res.present()});
   }
