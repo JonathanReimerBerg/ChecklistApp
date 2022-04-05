@@ -24,7 +24,7 @@
       <ion-item class="ion-text-wrap">
         <ion-checkbox color="primary" [(ngModel)]="item.checked" (ionChange)="updateItem(item, i)"></ion-checkbox>
         &nbsp;&nbsp; 
-        {{ item.item_name }}     
+        <ion-input [(ngModel)]="item.item_name" (ionChange)="updateItem(item, i)"></ion-input>     
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="removeItem(item)">
