@@ -15,7 +15,7 @@ export class SortPipe implements PipeTransform {
         listItems.sort(value => {return value.checked ? -1 : 1 });
       }
       if (sortType == 'doByDate') {
-        console.log("not available yet")
+        listItems.sort((a, b) => (new Date(a.due_by_date).valueOf() - new Date(b.due_by_date).valueOf()));
       }
       if (sortType == 'dateCreated') {
         listItems.sort((a, b) => (a.item_id - b.item_id));
@@ -28,7 +28,7 @@ export class SortPipe implements PipeTransform {
         listItems.sort(value => {return value.checked ? 1 : -1 });
       }
       if (sortType == 'doByDate') {
-        console.log("not available yet")
+        listItems.sort((a, b) => (new Date(b.due_by_date).valueOf() - new Date(a.due_by_date).valueOf()));
       }
       if (sortType == 'dateCreated') {
         listItems.sort((a, b) => (b.item_id - a.item_id));
