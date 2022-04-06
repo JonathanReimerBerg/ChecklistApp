@@ -21,10 +21,16 @@
   </ion-content>
   <ion-list>
     <ion-item-sliding *ngFor="let item of getListItems() | sort: sortType : desc; let i = index">
+      <ion-item-options side="start">
+        <ion-item-option color="warning">
+          <ion-icon size="large" name="alert-circle-outline" slot="end" (click)="setDueByDate(item, i)"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
       <ion-item class="ion-text-wrap">
         <ion-checkbox color="primary" [(ngModel)]="item.checked" (ionChange)="updateItem(item, i)"></ion-checkbox>
         &nbsp;&nbsp; 
-        <ion-input [(ngModel)]="item.item_name" (ionChange)="updateItem(item, i)"></ion-input>     
+        <ion-input [(ngModel)]="item.item_name" (ionChange)="updateItem(item, i)"></ion-input>   
+        <ion-badge color="warning" *ngIf="item.due_by_date" slot="end">{{ item.due_by_date|daysUntilDue }}</ion-badge>  
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="removeItem(item)">

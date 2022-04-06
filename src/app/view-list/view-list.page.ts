@@ -133,4 +133,42 @@ export class ViewListPage implements OnInit {
     (await alert).present()
   }
 
+  async setDueByDate(item: ListItem, index: number) {
+    let alert = this.alertCtrl.create({
+      header: 'Set Due By Date',
+      inputs: [{
+        name: 'Date',
+        attributes: {
+          autoComplete: 'off'
+        },
+        type: 'date'
+      }],
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel'
+      }, {
+        text: 'Set',
+        handler: async (data) => {
+          if(data['Date'].trim()) {
+            // reformat date
+            let date = data['Date'];
+            date = date.split("-");
+            date.push(date.shift());
+            date = date.join("/");
+
+            item.due_by_date = date;
+            this.updateItem(item, index);
+            this.checklistApiService.presentToast(`Item due by ${date}`);
+          } else {
+            item.due_by_date = "";
+            this.updateItem(item, index);
+            this.checklistApiService.presentToast('Due by date removed.')
+
+          }
+        }
+      }]
+    });
+    (await alert).present()
+  }
+
 }

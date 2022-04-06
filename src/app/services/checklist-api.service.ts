@@ -17,6 +17,7 @@ export interface ListItem extends MetaList {
   item_id: number;
   item_name: string;
   date_created: string;
+  due_by_date: string;
   checked: boolean;
 }
 
@@ -136,6 +137,7 @@ export class ChecklistApiService {
       id: listID,
       item_id: this.generateUniqueID(),
       item_name: title,
+      due_by_date: '',
       date_created: currentDate,
       checked: false
     };

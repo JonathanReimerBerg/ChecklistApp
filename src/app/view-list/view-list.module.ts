@@ -1,3 +1,4 @@
+import { DaysUntilDuePipe } from './../days-until-due.pipe';
 import { SortPipe } from './../sort.pipe';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,6 +17,6 @@ import { ViewListPage } from './view-list.page';
     IonicModule,
     ViewListPageRoutingModule
   ],
-  declarations: [ViewListPage, SortPipe]
+  declarations: [ViewListPage, SortPipe, DaysUntilDuePipe]
 })
 export class ViewListPageModule {}
