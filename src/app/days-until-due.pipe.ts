@@ -12,7 +12,7 @@ export class DaysUntilDuePipe implements PipeTransform {
     let difference = Math.abs(day2 - day1);
     let numDays = difference / (1000 * 3600 * 24)
     if (numDays < 1) {
-      let hours = Math.floor(numDays * 24);
+      let hours = Math.ceil(numDays * 24);
 
       if (hours) {
         return hours !== 1 ? String(hours) + ' Hours': String(hours) + ' Hour';
