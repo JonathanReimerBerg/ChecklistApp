@@ -141,7 +141,7 @@ export class ViewListPage implements OnInit {
         attributes: {
           autoComplete: 'off'
         },
-        type: 'date'
+        type: 'datetime-local'
       }],
       buttons: [{
         text: 'Cancel',
@@ -150,17 +150,14 @@ export class ViewListPage implements OnInit {
         text: 'Set',
         handler: async (data) => {
           if(data['Date'].trim()) {
-            // reformat date
-            let date = data['Date'];
-            date = date.split("-");
-            date.push(date.shift());
-            date = date.join("/");
+            let date = new Date(data['Date']);
 
             item.due_by_date = date;
             this.updateItem(item, index);
-            this.checklistApiService.presentToast(`Item due by ${date}`);
+            this.checklistApiService.presentToast(
+              `Item due by ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`);
           } else {
-            item.due_by_date = "";
+            item.due_by_date = null;
             this.updateItem(item, index);
             this.checklistApiService.presentToast('Due by date removed.')
 
