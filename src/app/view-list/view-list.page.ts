@@ -36,6 +36,7 @@ export class ViewListPage implements OnInit {
       let alert = this.alertCtrl.create({
         header: 'Unlock List',
         cssClass: 'whiteBackground',
+        backdropDismiss: false,
         inputs: [{
           name: 'Password',
           placeholder: 'Password',
