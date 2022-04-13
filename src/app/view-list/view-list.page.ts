@@ -1,7 +1,7 @@
 import { ListItem, List, ChecklistApiService } from './../services/checklist-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-view-list',
@@ -18,6 +18,7 @@ export class ViewListPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private checklistApiService: ChecklistApiService,
     private alertCtrl: AlertController,
+    private navCtrl: NavController,
     public toastController: ToastController
   ) { }
 
@@ -28,6 +29,40 @@ export class ViewListPage implements OnInit {
     this.list = this.checklistApiService.getCurrentList(this.listID);
     this.sortType = this.list.sorting_method;
     this.desc = !this.list.sorting_reversed
+  }
+
+  async ionViewWillEnter() {
+    if (this.list.locked) {
+      let alert = this.alertCtrl.create({
+        header: 'Unlock List',
+        cssClass: 'whiteBackground',
+        inputs: [{
+          name: 'Password',
+          placeholder: 'Password',
+          attributes: {
+            autoComplete: 'off'
+          },
+          type: 'password'
+        }],
+        buttons: [{
+          text: 'Cancel',
+          handler: () => {
+            this.navCtrl.back();
+          }
+        }, {
+          text: 'Unlock',
+          handler: (data) => {
+            if (data['Password'] === this.list.locked) {
+              this.checklistApiService.presentToast("List unlocked.");
+            } else {
+              this.checklistApiService.presentToast("Password is incorrect", null, "top", "danger");
+              return false;
+            }
+          }
+        }]
+      });
+      (await alert).present();
+    }
   }
 
   getListItems(): ListItem[] {
@@ -42,25 +77,25 @@ export class ViewListPage implements OnInit {
         text: 'Alphabetical',
         handler: (data) => {
           this.checklistApiService.modifyList(this.listID, null, null, "alphabetical", (this.list.sorting_method === "alphabetical")), this.sortType = 'alphabetical', this.desc = !this.list.sorting_reversed
-          this.checklistApiService.presentToast(`Sorting alphabetically (${this.desc ? 'Desc': 'Asc'})`, 3000);
+          this.checklistApiService.presentToast(`Sorting alphabetically (${this.desc ? 'Desc': 'Asc'})`);
         }
       }, {
         text: 'Completed',
         handler: (data) => {
           this.checklistApiService.modifyList(this.listID, null, null, "completed", (this.list.sorting_method === "completed")), this.sortType = 'completed', this.desc = !this.list.sorting_reversed
-          this.checklistApiService.presentToast(`Sorting via completion (${this.desc ? 'Desc': 'Asc'})`, 3000);
+          this.checklistApiService.presentToast(`Sorting via completion (${this.desc ? 'Desc': 'Asc'})`);
         }
       }, {
         text: 'Do By Date',
         handler: (data) => {
           this.checklistApiService.modifyList(this.listID, null, null, "doByDate", (this.list.sorting_method === "doByDate")), this.sortType = 'doByDate', this.desc = !this.list.sorting_reversed
-          this.checklistApiService.presentToast(`Sorting via do by date (${this.desc ? 'Desc': 'Asc'})`, 3000);
+          this.checklistApiService.presentToast(`Sorting via do by date (${this.desc ? 'Desc': 'Asc'})`);
         }
       }, {
         text: 'Date Created',
         handler: (data) => {
           this.checklistApiService.modifyList(this.listID, null, null, "dateCreated", (this.list.sorting_method === "dateCreated")), this.sortType = 'dateCreated', this.desc = !this.list.sorting_reversed
-          this.checklistApiService.presentToast(`Sorting via date created (${this.desc ? 'Desc': 'Asc'})`, 3000);
+          this.checklistApiService.presentToast(`Sorting via date created (${this.desc ? 'Desc': 'Asc'})`);
         }
       }]
     });
@@ -161,6 +196,67 @@ export class ViewListPage implements OnInit {
             this.updateItem(item, index);
             this.checklistApiService.presentToast('Due by date removed.')
 
+          }
+        }
+      }]
+    });
+    (await alert).present()
+  }
+
+  async setLockedList() {
+    let alert = this.alertCtrl.create({
+      header: 'Set Locked List',
+      inputs: [{
+        name: 'Password',
+        placeholder: 'Password',
+        attributes: {
+          autoComplete: 'off'
+        },
+        type: 'password'
+      }],
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel'
+      }, {
+        text: 'Set',
+        handler: (data) => {
+          if (data['Password']) {
+            this.checklistApiService.modifyList(this.listID, null, null, null, null, data['Password']);
+            this.checklistApiService.presentToast("List successfully locked.");
+          } else {
+            this.checklistApiService.presentToast("Password cannot be blank.", null, "top", "danger");
+            return false;
+          }
+        }
+      }]
+    });
+    (await alert).present()
+  }
+
+  async removeLockedList() {
+    let alert = this.alertCtrl.create({
+      header: 'Remove Lock From List',
+      inputs: [{
+        name: 'Password',
+        placeholder: 'Password',
+        attributes: {
+          autoComplete: 'off'
+        },
+        type: 'password'
+      }],
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel'
+      }, {
+        text: 'Remove',
+        handler: (data) => {
+          if (data['Password'] === this.list.locked) {
+            this.checklistApiService.modifyList(this.listID, null, null, null, null, "removethislist");
+            this.checklistApiService.presentToast("List lock removed.");
+            return true;
+          } else {
+            this.checklistApiService.presentToast("Password is incorrect", null, "top", "danger");
+            return false;
           }
         }
       }]
