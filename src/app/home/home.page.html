@@ -7,6 +7,8 @@
     </ion-title>
     <ion-menu-button slot = "start" autoHide="false" ></ion-menu-button>
     <ion-icon size="large" name="add-sharp" slot="end" (click)="showAlert()"></ion-icon>
+    <ion-searchbar
+    placeholder="Search..." [(ngModel)]="searchTerm" slot="end" animated debounce="500"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
