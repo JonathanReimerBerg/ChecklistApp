@@ -73,7 +73,7 @@
 </ion-content>
 
   <ion-list>
-    <app-list *ngFor="let list of getLists()" [list]="list"></app-list>
+    <app-list *ngFor="let list of getLists() | sortlists" [list]="list"></app-list>
   </ion-list>
 </ion-content>
 

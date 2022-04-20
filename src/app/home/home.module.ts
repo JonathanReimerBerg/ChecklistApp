@@ -1,3 +1,5 @@
+import { SortlistsPipe } from './../sortlists.pipe';
+import { SortPipe } from './../sort.pipe';
 import { ListComponentModule } from './../list/list.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -6,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { MessageComponentModule } from '../message/message.module';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
@@ -15,9 +16,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     IonicModule,
     MessageComponentModule,
     ListComponentModule,
-    HomePageRoutingModule,
-    Ng2SearchPipeModule
+    HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, SortlistsPipe]
 })
 export class HomePageModule {}

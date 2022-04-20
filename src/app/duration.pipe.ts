@@ -10,8 +10,10 @@ export class DurationPipe implements PipeTransform {
       return "success";
     } else if (daysUntilDue.includes("Day")) {
       return "warning";
-    } else {
+    } else if (daysUntilDue.includes("Hour")) {
       return "danger";
+    } else {
+      return "medium";
     }
   }
 

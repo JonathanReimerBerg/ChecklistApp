@@ -141,6 +141,9 @@ export class ViewListPage implements OnInit {
   }
 
   updateItem(item: ListItem, i: number) {
+    if (item.checked) {
+      item.due_by_date = null;
+    }
     this.checklistApiService.updateItem(this.listID, item, i);
   }
 
@@ -184,9 +187,16 @@ export class ViewListPage implements OnInit {
         role: 'cancel'
       }, {
         text: 'Set',
-        handler: async (data) => {
+        handler: (data) => {
           if(data['Date'].trim()) {
             let date = new Date(data['Date']);
+
+            if (date < new Date()) {
+              this.checklistApiService.presentToast(
+                "Due date cannot be in the past."
+              )
+              return false;
+            }
 
             item.due_by_date = date;
             this.updateItem(item, index);

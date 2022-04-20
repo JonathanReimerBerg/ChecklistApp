@@ -8,12 +8,11 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SortPipe } from './sort.pipe';
 import { DaysUntilDuePipe } from './days-until-due.pipe';
 import { DurationPipe } from './duration.pipe';
 
 @NgModule({
-  declarations: [AppComponent, SortPipe, DaysUntilDuePipe, DurationPipe],
+  declarations: [AppComponent, DaysUntilDuePipe, DurationPipe],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,  IonicStorageModule.forRoot()],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ChecklistApiService],

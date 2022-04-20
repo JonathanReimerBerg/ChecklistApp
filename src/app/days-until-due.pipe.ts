@@ -9,8 +9,11 @@ export class DaysUntilDuePipe implements PipeTransform {
     let day1 = new Date(date).valueOf();
     let day2 = new Date(Date.now()).valueOf();
 
-    let difference = Math.abs(day2 - day1);
+    let difference = day1 - day2;
     let numDays = difference / (1000 * 3600 * 24)
+    if (difference < 0) {
+      return 'Overdue!';
+    }
     if (numDays < 1) {
       let hours = Math.ceil(numDays * 24);
 
