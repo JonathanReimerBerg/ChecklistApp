@@ -10,6 +10,8 @@ import { AlertController, ToastController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  public _reload;
+
   constructor(
     private data: DataService,
     private checklistApiService: ChecklistApiService,
@@ -21,6 +23,11 @@ export class HomePage {
     setTimeout(() => {
       ev.detail.complete();
     }, 3000);
+  }
+
+  ionViewWillEnter() {
+    setTimeout(() => this._reload = false);
+    setTimeout(() => this._reload = true);
   }
 
   getMessages(): Message[] {

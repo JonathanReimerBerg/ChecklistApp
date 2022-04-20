@@ -72,9 +72,11 @@
   </p>
 </ion-content>
 
+<ng-container *ngIf="_reload">
   <ion-list>
     <app-list *ngFor="let list of getLists() | sortlists" [list]="list"></app-list>
   </ion-list>
+</ng-container>
 </ion-content>
 
 
