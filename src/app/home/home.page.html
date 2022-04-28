@@ -82,7 +82,7 @@
 </ion-content>
 
   <ion-list>
-    <app-list *ngFor="let list of getLists() | filter:searchTerm" [list]="list"></app-list>
+    <app-list *ngFor="let list of getLists() | sortlists| filter:searchTerm" [list]="list"></app-list>
   </ion-list>
 </ion-content>
 
