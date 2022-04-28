@@ -8,7 +8,7 @@
     <!--
     <ion-menu-button slot = "start" autoHide="false" ></ion-menu-button>
     -->
-    <ion-icon size="large" name="add-sharp" slot="end" (click)="showAlert()"></ion-icon>
+    <ion-icon size="large" name="add-sharp" slot="end" (click)="showAlert()" *ngIf="filterType == 'all'"></ion-icon>
   </ion-toolbar>
 </ion-header>
 <ion-toolbar>
@@ -89,6 +89,14 @@
   <p>
     <i>You currently don't have any lists. Click the '+' button to create one.</i>
   </p>
+</ion-content>
+
+<ion-content *ngIf="getLists().length != 0 && (getLists() | filterLists:filterType).length == 0">
+  <ion-text class="ion-text-center">
+    <p>
+      <i>You currently do not have any lists completed. Better get to work!</i>
+    </p>
+  </ion-text>
 </ion-content>
 
   <ng-container *ngIf="_reload">
