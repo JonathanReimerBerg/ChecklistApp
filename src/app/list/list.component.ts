@@ -1,6 +1,6 @@
 import { HomePage } from './../home/home.page';
 import { Component, OnInit, Input } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ToastController, NavController } from '@ionic/angular';
 import { appInitialize } from '@ionic/angular/app-initialize';
 import { ChecklistApiService, List, ListItem } from './../services/checklist-api.service';
 
@@ -15,6 +15,8 @@ export class ListComponent implements OnInit {
 
   constructor(
     private checklistApiService: ChecklistApiService,
+    private alertCtrl: AlertController,
+    private navCtrl: NavController,
     public alertController: AlertController,
     public toastController: ToastController,
     public homePage: HomePage
@@ -40,5 +42,43 @@ export class ListComponent implements OnInit {
     this.checklistApiService.modifyList(this.list.id, null, null, null, null, null, "incomplete");
     this.checklistApiService.presentToast("List marked as incomplete.");
     this.homePage.ionViewWillEnter();
+  }
+
+  async checkLocked() {
+    if (this.list.locked) {
+      let alert = this.alertCtrl.create({
+        header: 'Unlock List',
+        cssClass: 'whiteBackground',
+        backdropDismiss: false,
+        inputs: [{
+          name: 'Password',
+          placeholder: 'Password',
+          attributes: {
+            autoComplete: 'off'
+          },
+          type: 'password'
+        }],
+        buttons: [{
+          text: 'Cancel',
+          handler: () => {
+            this.navCtrl.navigateBack('/home');
+          }
+        }, {
+          text: 'Unlock',
+          handler: (data) => {
+            if (data['Password'] === this.list.locked) {
+              this.navCtrl.navigateForward('/list/' + this.list.id);
+              this.checklistApiService.presentToast("List unlocked.");
+            } else {
+              this.checklistApiService.presentToast("Password is incorrect", null, "top", "danger");
+              return false;
+            }
+          }
+        }]
+      });
+      (await alert).present();
+    } else {
+      this.navCtrl.navigateForward('/list/' + this.list.id);
+    }
   }
 }

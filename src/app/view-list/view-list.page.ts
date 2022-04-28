@@ -31,41 +31,6 @@ export class ViewListPage implements OnInit {
     this.desc = !this.list.sorting_reversed
   }
 
-  async ionViewWillEnter() {
-    if (this.list.locked) {
-      let alert = this.alertCtrl.create({
-        header: 'Unlock List',
-        cssClass: 'whiteBackground',
-        backdropDismiss: false,
-        inputs: [{
-          name: 'Password',
-          placeholder: 'Password',
-          attributes: {
-            autoComplete: 'off'
-          },
-          type: 'password'
-        }],
-        buttons: [{
-          text: 'Cancel',
-          handler: () => {
-            this.navCtrl.back();
-          }
-        }, {
-          text: 'Unlock',
-          handler: (data) => {
-            if (data['Password'] === this.list.locked) {
-              this.checklistApiService.presentToast("List unlocked.");
-            } else {
-              this.checklistApiService.presentToast("Password is incorrect", null, "top", "danger");
-              return false;
-            }
-          }
-        }]
-      });
-      (await alert).present();
-    }
-  }
-
   getListItems(): ListItem[] {
     return this.checklistApiService.getListItems(this.listID);
   }
