@@ -11,6 +11,8 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class HomePage {
   public _reload;
+  
+  searchTerm: string;
 
   constructor(
     private data: DataService,
