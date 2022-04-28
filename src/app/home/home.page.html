@@ -11,6 +11,16 @@
     <ion-icon size="large" name="add-sharp" slot="end" (click)="showAlert()"></ion-icon>
   </ion-toolbar>
 </ion-header>
+<ion-toolbar>
+<ion-segment color="primary" value="all" (ionChange)="toggleListTypes($event)">
+  <ion-segment-button value="all">
+    <ion-label>To Do</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="completed">
+    <ion-label>Completed</ion-label>
+  </ion-segment-button>
+</ion-segment>
+</ion-toolbar>
 <ion-header class="ion-no-border">
   <ion-toolbar *ngIf="search">
     <ion-searchbar
@@ -81,9 +91,11 @@
   </p>
 </ion-content>
 
-  <ion-list>
-    <app-list *ngFor="let list of getLists() | sortlists| filter:searchTerm" [list]="list"></app-list>
-  </ion-list>
+  <ng-container *ngIf="_reload">
+    <ion-list>
+      <app-list *ngFor="let list of getLists() | filterLists:filterType | sortlists | filter:searchTerm" [list]="list"></app-list>
+    </ion-list>
+  </ng-container>
 </ion-content>
 
 

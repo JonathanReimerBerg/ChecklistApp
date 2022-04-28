@@ -275,4 +275,16 @@ export class ViewListPage implements OnInit {
     (await alert).present()
   }
 
+  markListAsComplete() {
+    this.checklistApiService.modifyList(this.listID, null, null, null, null, null, "true");
+    this.checklistApiService.presentToast("List marked as complete.");
+    this.navCtrl.back();
+  }
+
+  markListAsIncomplete() {
+    this.checklistApiService.modifyList(this.listID, null, null, null, null, null, "incomplete");
+    this.checklistApiService.presentToast("List marked as incomplete.");
+    this.navCtrl.back();
+  }
+
 }

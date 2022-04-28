@@ -56,8 +56,11 @@
       <ion-fab-button color="warning">
         <ion-icon color="light" name="swap-vertical" (click)="sort_items()" id="largerSize"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button color="success">
-        <ion-icon name="checkmark" id="largerSize"></ion-icon>
+      <ion-fab-button color="success" *ngIf="list.completed != 'true'">
+        <ion-icon name="checkmark" id="largerSize" (click)="markListAsComplete()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="danger" *ngIf="list.completed == 'true'">
+        <ion-icon name="close" id="largerSize" (click)="markListAsIncomplete()"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>

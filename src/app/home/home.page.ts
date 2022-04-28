@@ -15,6 +15,8 @@ export class HomePage {
   searchTerm: string;
   search: boolean = false;
 
+  filterType: string = "all";
+
   constructor(
     private data: DataService,
     private checklistApiService: ChecklistApiService,
@@ -103,6 +105,11 @@ export class HomePage {
   hideSearchBar() {
     this.search = false;
     this.searchTerm = "";
+  }
+
+  toggleListTypes(e) {
+    let value = e.detail.value;
+    this.filterType = value;
   }
  
 }

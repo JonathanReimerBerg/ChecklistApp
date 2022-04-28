@@ -5,8 +5,11 @@
         <ion-icon name="lock-closed" *ngIf="list.locked"></ion-icon>{{ list.title }}
         <ion-label slot="end" color="medium">Last Modified: {{ list.date_modified }}</ion-label>      
       </ion-item>
+      <ion-item-options side="start" *ngIf="list.completed">
+        <ion-item-option color="warning" (click)="incompleteList()">Mark as Incomplete</ion-item-option>
+      </ion-item-options>
       <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="removeList(item)">Delete</ion-item-option>
+        <ion-item-option color="danger" (click)="removeList()">Delete</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

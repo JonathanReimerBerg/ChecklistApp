@@ -1,3 +1,4 @@
+import { FilterListsPipe } from './../filter-lists.pipe';
 import { SortlistsPipe } from './../sortlists.pipe';
 import { SortPipe } from './../sort.pipe';
 import { ListComponentModule } from './../list/list.module';
@@ -20,6 +21,6 @@ import { Ng2SearchPipeModule} from 'ng2-search-filter';
     HomePageRoutingModule,
     Ng2SearchPipeModule
   ],
-  declarations: [HomePage, SortlistsPipe]
+  declarations: [HomePage, SortlistsPipe, FilterListsPipe]
 })
 export class HomePageModule {}

@@ -12,6 +12,7 @@ export interface List extends MetaList {
   sorting_method: string;
   sorting_reversed: boolean;
   locked: string;
+  completed: string;
 }
 
 export interface ListItem extends MetaList {
@@ -62,7 +63,8 @@ export class ChecklistApiService {
       date_modified: new Date(timeElasped).toLocaleDateString(),
       sorting_method: "dateCreated",
       sorting_reversed: false,
-      locked: ""
+      locked: "",
+      completed: ""
     };
 
     let curLists = this.getLists();
@@ -71,7 +73,8 @@ export class ChecklistApiService {
     this.set('lists', curLists);
   }
 
-  public modifyList(id: number, title?: string, date_modified?: string, sorting_method?: string, sorting_reversed?: boolean, locked?: string) {
+  public modifyList(id: number, title?: string, date_modified?: string, sorting_method?: string, sorting_reversed?: boolean, locked?: string,
+                    completed?: string) {
     let list = this.getCurrentList(id);
 
     if (date_modified) {
@@ -94,6 +97,13 @@ export class ChecklistApiService {
         list.locked = "";
       } else {
         list.locked = locked;
+      }
+    }
+    if (completed) {
+      if (completed == 'true') {
+        list.completed = "true";
+      } else {
+        list.completed = completed;
       }
     }
     this.saveList(id, list);

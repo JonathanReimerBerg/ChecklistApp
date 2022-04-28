@@ -1,3 +1,4 @@
+import { HomePage } from './../home/home.page';
 import { Component, OnInit, Input } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 import { appInitialize } from '@ionic/angular/app-initialize';
@@ -15,12 +16,13 @@ export class ListComponent implements OnInit {
   constructor(
     private checklistApiService: ChecklistApiService,
     public alertController: AlertController,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public homePage: HomePage
     ) { }
 
   ngOnInit() {}
 
-  removeList(item){
+  removeList(){
     this.alertController.create({
       header: 'Warning: Deleting List',
       message: 'Are you sure you want to delete the list?',
@@ -32,5 +34,11 @@ export class ListComponent implements OnInit {
         }}
       ]
     }).then(res => {res.present()});
+  }
+
+  incompleteList() {
+    this.checklistApiService.modifyList(this.list.id, null, null, null, null, null, "incomplete");
+    this.checklistApiService.presentToast("List marked as incomplete.");
+    this.homePage.ionViewWillEnter();
   }
 }
