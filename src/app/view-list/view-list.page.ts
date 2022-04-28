@@ -128,9 +128,14 @@ export class ViewListPage implements OnInit {
         role: 'cancel'
       }, {
         text: 'Update',
-        handler: async (data) => {
-          this.checklistApiService.modifyList(this.listID, data['Title']);
-          this.checklistApiService.presentToast("List successfully updated.")
+        handler: (data) => {
+          if (data['Title'].trim()) {
+            this.checklistApiService.modifyList(this.listID, data['Title']);
+            this.checklistApiService.presentToast("List successfully updated.")
+          } else {
+            this.checklistApiService.presentToast("List title cannot be blank.", null, "top", "danger");
+            return false;
+          }
         }
       }]
     });
