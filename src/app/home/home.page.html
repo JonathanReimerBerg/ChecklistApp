@@ -11,15 +11,14 @@
     <ion-icon size="large" name="add-sharp" slot="end" (click)="showAlert()"></ion-icon>
   </ion-toolbar>
 </ion-header>
-<ion-header>
-  <ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar *ngIf="search">
     <ion-searchbar
     placeholder=""
-    showCancelButton="focus"
+    showCancelButton="always"
+    showClearButton="focus"
     [(ngModel)]="searchTerm"
-    slot="end"
-    animated debounce="500"
-    animated></ion-searchbar>
+    (ionCancel)="hideSearchBar()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -74,9 +73,7 @@
 <ion-router-outlet id="main"></ion-router-outlet>
 
 <ion-content [fullscreen]="true">
-  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+  <ion-refresher slot="fixed" (ionPull)="showSearchBar()" *ngIf="!search"></ion-refresher>
   
 <ion-content *ngIf="getLists().length == 0" style="text-align:center"  >
   <p>

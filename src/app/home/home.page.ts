@@ -13,6 +13,7 @@ export class HomePage {
   public _reload;
   
   searchTerm: string;
+  search: boolean = false;
 
   constructor(
     private data: DataService,
@@ -94,6 +95,14 @@ export class HomePage {
  
   ReviewApp() {
     alert('Five Stars?')
+  }
+
+  showSearchBar() {
+    this.search = true;
+  }
+  hideSearchBar() {
+    this.search = false;
+    this.searchTerm = "";
   }
  
 }
