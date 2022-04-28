@@ -1,5 +1,5 @@
 
-  <ion-list>
+  <ion-list class="ion-no-padding">
     <ion-item-sliding *ngIf="list">
       <ion-item class="ion-text-wrap" [routerLink]="'/list/' + list.id">
         <ion-icon name="lock-closed" *ngIf="list.locked"></ion-icon>{{ list.title }}

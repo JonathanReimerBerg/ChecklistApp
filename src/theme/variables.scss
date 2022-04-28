@@ -3,6 +3,7 @@
 
 /** Ionic CSS Variables **/
 :root {
+  --ion-font-family: 'AppFont';
   /** primary **/
   --ion-color-primary: #3880FF;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -233,4 +234,10 @@
 
     --ion-card-background: #1e1e1e;
   }
+  
+  @font-face {
+    font-family: AppFont;
+    src: url("../assets/fonts/OpenSans-Regular.ttf"); //change url accordingly
+    }
+    
 }

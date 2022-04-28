@@ -46,3 +46,15 @@
 ion-searchbar {
   padding-top: 2%!important;
 }
+
+ion-item {
+  --min-height: auto!important;
+}
+
+.md ion-toolbar {
+  --min-height :50px!important;
+}
+
+#largerTitle {
+  font-size: 150%!important;
+}
