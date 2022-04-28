@@ -2,7 +2,8 @@
   <ion-list class="ion-no-padding">
     <ion-item-sliding *ngIf="list">
       <ion-item class="ion-text-wrap" (click)="checkLocked()">
-        <ion-icon name="lock-closed" *ngIf="list.locked"></ion-icon>{{ list.title }}
+        <ion-icon name="lock-closed" *ngIf="list.locked"></ion-icon>
+        <ion-icon name="alert-circle-outline" *ngIf="checkDueItems() > 0" color="danger"></ion-icon>{{ list.title }}
         <ion-label slot="end" color="medium">Last Modified: {{ list.date_modified }}</ion-label>      
       </ion-item>
       <ion-item-options side="start" *ngIf="list.completed == 'true'">

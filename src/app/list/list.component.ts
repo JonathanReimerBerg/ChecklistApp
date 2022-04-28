@@ -11,7 +11,6 @@ import { ChecklistApiService, List, ListItem } from './../services/checklist-api
 })
 export class ListComponent implements OnInit {
   @Input() list: List;
-  private listID: number;
 
   constructor(
     private checklistApiService: ChecklistApiService,
@@ -80,5 +79,23 @@ export class ListComponent implements OnInit {
     } else {
       this.navCtrl.navigateForward('/list/' + this.list.id);
     }
+  }
+
+  checkDueItems() {
+    let items = this.checklistApiService.getListItems(this.list.id);
+    let overdueCounter = 0;
+
+    for (let item of items) {
+      if (item.due_by_date) {
+        let day1 = new Date(item.due_by_date).valueOf();
+        let day2 = new Date(Date.now()).valueOf();
+  
+        let difference = day1 - day2;
+        if (difference < 0) {
+          overdueCounter++;
+        }
+      }
+    };
+    return overdueCounter;
   }
 }

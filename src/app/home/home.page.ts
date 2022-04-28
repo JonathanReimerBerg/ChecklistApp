@@ -35,6 +35,11 @@ export class HomePage {
     setTimeout(() => this._reload = true);
   }
 
+  reload() {
+    setTimeout(() => this._reload = false);
+    setTimeout(() => this._reload = true);
+  }
+
   getMessages(): Message[] {
     return this.data.getMessages();
   }
