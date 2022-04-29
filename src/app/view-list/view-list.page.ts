@@ -196,7 +196,11 @@ export class ViewListPage implements OnInit {
         }
       }]
     });
-    (await alert).present()
+    if (!item.checked) {
+      (await alert).present()
+    } else {
+      this.checklistApiService.presentToast('You cannot set a due date on a completed item.', null, 'top', 'danger');
+    }
   }
 
   async setLockedList() {
