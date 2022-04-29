@@ -51,6 +51,7 @@ export class HomePage {
   // add title param to addList when working with modal'
   addList(input: string) {
     this.checklistApiService.addList(input);
+    this.ionViewWillEnter();
     this.checklistApiService.presentToast("List successfully added.")
   }
 

@@ -23,18 +23,55 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {}
 
-  removeList(){
-    this.alertController.create({
-      header: 'Warning: Deleting List',
-      message: 'Are you sure you want to delete the list?',
-      buttons: [
-        {text: 'Cancel', handler: (data: any) => {console.log('Canceled', this.list)}},
-        {text: 'Delete', handler: (data: any) => {
-          this.checklistApiService.removeList(this.list);
-          this.checklistApiService.presentToast("List deleted.");
-        }}
-      ]
-    }).then(res => {res.present()});
+  async removeList(){
+    if (this.list.locked) {
+      let alert = this.alertCtrl.create({
+        header: 'Unlock List',
+        subHeader: 'Enter password to delete list.',
+        cssClass: 'whiteBackground',
+        backdropDismiss: false,
+        inputs: [{
+          name: 'Password',
+          placeholder: 'Password',
+          attributes: {
+            autoComplete: 'off'
+          },
+          type: 'password'
+        }],
+        buttons: [{
+          text: 'Cancel',
+          handler: () => {
+            this.navCtrl.navigateBack('/home');
+          }
+        }, {
+          text: 'Delete',
+          handler: (data) => {
+            if (data['Password'] === this.list.locked) {
+              this.checklistApiService.removeList(this.list);
+              this.homePage.ionViewWillEnter();
+              this.checklistApiService.presentToast("List deleted.");
+            } else {
+              this.checklistApiService.presentToast("Password is incorrect", null, "top", "danger");
+              return false;
+            }
+          }
+        }]
+      });
+      (await alert).present();
+    } else {
+        this.alertController.create({
+          header: 'Warning: Deleting List',
+          message: 'Are you sure you want to delete the list?',
+          buttons: [
+            {text: 'Cancel', handler: (data: any) => {console.log('Canceled', this.list)}},
+            {text: 'Delete', handler: (data: any) => {
+              this.checklistApiService.removeList(this.list);
+              this.homePage.ionViewWillEnter();
+              this.checklistApiService.presentToast("List deleted.");
+            }}
+          ]
+        }).then(res => {res.present()});
+    }
   }
 
   incompleteList() {
