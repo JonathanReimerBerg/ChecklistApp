@@ -78,6 +78,13 @@ export class ListComponent implements OnInit {
     this.checklistApiService.modifyList(this.list.id, null, null, null, null, null, "incomplete");
     this.checklistApiService.presentToast("List marked as incomplete.");
     this.homePage.ionViewWillEnter();
+
+    let items = this.checklistApiService.getListItems(this.list.id);
+    for (const [i, item] of items.entries()) {
+      item.checked = false;
+      this.checklistApiService.updateItem(this.list.id, item, i);
+    }
+    this.homePage.ionViewWillEnter();
   }
 
   async checkLocked() {

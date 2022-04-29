@@ -108,8 +108,23 @@ export class ViewListPage implements OnInit {
   updateItem(item: ListItem, i: number) {
     if (item.checked) {
       item.due_by_date = null;
+      if (!this.list.completed || this.list.completed == "incomplete") {
+        this.checkifAllComplete();
+      }
     }
     this.checklistApiService.updateItem(this.listID, item, i);
+  }
+
+  checkifAllComplete() {
+    let numChecked = 0;
+    for (let item of this.getListItems()) {
+      if (item.checked == true) {
+        numChecked++;
+      }
+    }
+    if (numChecked == this.getListItems().length) {
+      this.markListAsComplete();
+    }
   }
 
   async openEditTitleModal() {
