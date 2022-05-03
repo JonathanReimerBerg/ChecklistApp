@@ -3,6 +3,7 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { DataService, Message } from '../services/data.service';
 import { AlertController, ToastController } from '@ionic/angular';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-home',
@@ -46,6 +47,10 @@ export class HomePage {
 
   getLists(): List[] {
     return this.checklistApiService.getLists();
+  }
+
+  async showHelp() {
+    await Browser.open({ url: 'https://docs.google.com/document/d/1hubrJOZ1Mj9sU3J5xrwBuCJOqpYOQk1zKjT0WpAol5I/edit?usp=sharing' });
   }
 
   // add title param to addList when working with modal'

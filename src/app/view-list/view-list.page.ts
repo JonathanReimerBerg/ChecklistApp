@@ -178,7 +178,7 @@ export class ViewListPage implements OnInit {
 
             if (date < new Date()) {
               this.checklistApiService.presentToast(
-                "Due date cannot be in the past."
+                "Due date cannot be in the past.", null, "top", "danger"
               )
               return false;
             }
